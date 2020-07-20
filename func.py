@@ -14,7 +14,9 @@ def addEmployee(dict):
 	ind  = raw_input('please input the index of emplyee: ')
 	name = raw_input('please input the name of employee: ')
 	age  = raw_input('please input the age of employee: ')
-	print(type(age))
+	if int(ind) in dict.keys():
+		print('the index of emplyee already exists')
+		return dict
 	emInfo = {'name':name,'age':age}
 	dict[int(ind)]=emInfo
 	return dict
@@ -29,7 +31,40 @@ def delEmployee(dict):
 	return dict
 def queryEmployee(dict):
 	ind = raw_input('please input the index of the employee you want to query: ')
-	print('the name od the employee is '+dict[int(ind)]['name']+',the age of the employee is '+dict[int(ind)]['age'])
+	print('the name of the employee is '+dict[int(ind)]['name']+',the age of the employee is '+dict[int(ind)]['age'])
 	return dict
-	
 
+def alterInfo(dict):
+	ind = raw_input('please input the index of the employee you want to alter: ')
+	ind = int(ind)
+	name = raw_input('please input the new name of the employee: ')
+	age  = raw_input('please input the new age of the employee: ')
+	dict[ind]['name']=name
+	dict[ind]['age']=age
+	return dict
+
+def exitSystem(dict):
+	with open('employee.txt','w+') as fw:
+		for i in dict.keys():
+			fw.write(dict[i]['name']+' '+dict[i]['age'])
+			fw.write('\n')
+
+def displayEmployee(dict):
+	for i in dict.keys():
+		print('No.'+str(i)+': name: '+dict[i]['name']+',  age:'+dict[i]['age']+'\n')
+
+def readInfo(dict):
+	with open('employee.txt','r') as fr:
+		info = fr.readlines()
+		ind = 1
+		for i in info:
+			name,age=i.rstrip('\n').split()
+			info = {'name':name,'age':age}
+			dict[ind]=info
+			ind=ind+1
+	return dict
+
+
+
+
+	
